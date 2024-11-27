@@ -5,13 +5,13 @@ from confluent_kafka.schema_registry import SchemaRegistryClient
 from confluent_kafka.schema_registry.protobuf import ProtobufSerializer
 from confluent_kafka.serialization import StringSerializer, SerializationContext, MessageField
 
-from src.config import kafka_config
+from config import kafka_config
 from confluent_kafka import Producer
 from proto import event_pb2
 from google.protobuf.message import Message  # Base class for Protobuf messages
-from src.constants import kafka_topic
-from src.models import Genre, Author
-from src.schemas.index import genre_schema
+from constants import kafka_topic
+from models import Genre, Author
+from schemas.index import genre_schema
 
 def get_serializer(topic):
     schema_registry_client = SchemaRegistryClient(kafka_config.SCHEMA_REGISTRY_CONFIG)

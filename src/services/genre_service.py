@@ -1,9 +1,9 @@
 from sqlalchemy.exc import SQLAlchemyError
 
-from src.models.genre import Genre
-from src.config.database import SessionLocal
-from src.kafka import kafka_producer
-from src.constants import kafka_topic
+from models.genre import Genre
+from config.database import SessionLocal
+from kafka import kafka_producer
+from constants import kafka_topic
 
 class GenreService:
     def __init__(self):
