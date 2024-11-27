@@ -5,7 +5,7 @@ import uuid
 import json
 from google.protobuf import wrappers_pb2
 from proto import event_pb2
-from src.utils import time_convert
+from utils import time_convert
 
 
 

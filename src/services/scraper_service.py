@@ -1,13 +1,13 @@
 from bs4 import BeautifulSoup
 import requests
 import json
-from src.services.author_service import AuthorService
-from src.services.book_service import BookService
-from src.services.genre_service import GenreService
-from src.schemas.index import book_schema, genre_schema, author_schema
-from src.kafka import kafka_producer
-from src.constants import kafka_topic
-from src.utils import save_to_file
+from services.author_service import AuthorService
+from services.book_service import BookService
+from services.genre_service import GenreService
+from schemas.index import book_schema, genre_schema, author_schema
+from kafka import kafka_producer
+from constants import kafka_topic
+from utils import save_to_file
 
 def get_soup(bookURL):
     headers = {'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US) AppleWebKit/532.0 (KHTML, like Gecko) Chrome/4.0.209.0 Safari/532.0'}

@@ -1,6 +1,6 @@
-from src.models import Author, Genre
-from src.models.book import Book
-from src.config.database import SessionLocal
+from models import Author, Genre
+from models.book import Book
+from config.database import SessionLocal
 class BookService:
     def __init__(self):
         self.session = SessionLocal()
