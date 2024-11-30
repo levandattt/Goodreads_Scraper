@@ -49,6 +49,8 @@ class Author(Base):
             "uuid": self.uuid,
         }
 
+        if self.name:
+            fields["name"] = self.name
         if self.stage_name:
             fields["stage_name"] = wrappers_pb2.StringValue(value=self.stage_name)
         if self.birth_date:

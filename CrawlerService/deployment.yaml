@@ -3,29 +3,29 @@ kind: CronJob
 metadata:
   name: crawler-service-cronjob
 spec:
-  schedule: "20 22 */2 * *"
+  schedule: "30 * * * *"
+  timeZone: "Asia/Ho_Chi_Minh"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
-      dnsPolicy: None
-      dnsConfig:
-        nameservers:
-          - 10.43.0.10  # Cluster DNS service IP
-        searches:
-          - default.svc.cluster.local
-          - svc.cluster.local
-          - cluster.local
-        options:
-          - name: ndots
-            value: "2"
-
       backoffLimit: 4
       template:
         metadata:
           labels:
             app: crawler-service
         spec:
+          dnsPolicy: None
+          dnsConfig:
+            nameservers:
+              - 10.43.0.10  # Cluster DNS service IP
+            searches:
+              - default.svc.cluster.local
+              - svc.cluster.local
+              - cluster.local
+            options:
+              - name: ndots
+                value: "2"
           restartPolicy: OnFailure
           containers:
             - name: crawler-service
