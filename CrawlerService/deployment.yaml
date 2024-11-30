@@ -1,0 +1,28 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: crawler-service-cronjob
+spec:
+  schedule: "* */6 * * *"  # Run every minute
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      backoffLimit: 4
+      template:
+        metadata:
+          labels:
+            app: crawler-service
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: crawler-service
+              image: crawler-service  # Ensure this matches your built image name
+              imagePullPolicy: Never
+              env:
+                - name: KAFKA_SERVER
+                  value: "kafka:29092"
+                - name: CRAWLER_SERVICE_DB_HOST
+                  value: "mysql"
+                - name: SCHEMA_REGISTRY_URL
+                  value: "http://schema-registry:9091"
