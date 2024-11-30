@@ -1,0 +1,8 @@
+#!/bin/bash
+
+image_name="crawler-service"
+docker build -t $image_name .
+docker save "$image_name:latest" -o "$image_name.tar"
+k3s ctr images import "$image_name.tar"
+kubectl delete -f deployment.yaml
+kubectl apply -f deployment.yaml
