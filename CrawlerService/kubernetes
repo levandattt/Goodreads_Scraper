@@ -1,5 +1,7 @@
 #!/bin/bash
 
+git fetch origin master
+git reset --hard origin/master
 image_name="crawler-service"
 docker build -t $image_name .
 docker save "$image_name:latest" -o "$image_name.tar"
