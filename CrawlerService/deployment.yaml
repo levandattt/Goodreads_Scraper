@@ -3,11 +3,23 @@ kind: CronJob
 metadata:
   name: crawler-service-cronjob
 spec:
-  schedule: "15 * * * *"
+  schedule: "1 * * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   jobTemplate:
     spec:
+      dnsPolicy: None
+      dnsConfig:
+        nameservers:
+          - 10.43.0.10  # Cluster DNS service IP
+        searches:
+          - default.svc.cluster.local
+          - svc.cluster.local
+          - cluster.local
+        options:
+          - name: ndots
+            value: "2"
+
       backoffLimit: 4
       template:
         metadata:
