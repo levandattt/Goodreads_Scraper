@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: crawler-service-cronjob
 spec:
-  schedule: "* */6 * * *"  # Run every minute
+  schedule: "15 * * * *"
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
   jobTemplate:

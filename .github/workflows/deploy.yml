@@ -1,0 +1,35 @@
+name: Deploy Changed Services
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  detect-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+
+      - name: Identify Changed Services
+        id: changed_services
+        run: |
+          SERVICES_CHANGED=$(git diff --name-only HEAD~1 HEAD | grep -E '^(CrawlerService)/' | cut -d'/' -f1 | sort | uniq | tr '\n' ' ')
+          echo "services=$SERVICES_CHANGED" >> $GITHUB_ENV
+
+      - name: Deploy Changed Services
+        if: env.services != ''
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" -X POST -H "Authorization:${{secrets.DEPLOYMENT_TOKEN}}" \
+            -H "Content-Type: application/json" \
+            -d '{"serviceNames": ["'$(echo $services | sed 's/ /","/g')'"]}' \
+            http://dominhquan.me:9000/api/deployment)
+            if [ "$response" -ne 200 ]; then
+            echo "Deployment failed with status $response"
+            exit 1
+            else
+            echo "Deployment triggered successfully with status $response"
+            fi
